@@ -8,7 +8,7 @@ function LotteryViewModel()
     self.people = ko.computed(function() {
 		return self.peopleList;
     })
-    self.theWinner = ko.observable(new Person("foo"));
+    self.theWinner = ko.observable(new Person("", ""));
 
     self.counter = ko.observable(countdownSeconds+1);
     self.lastIndex = 0;
@@ -33,14 +33,22 @@ function LotteryViewModel()
             },
             function (err, data)
             {
-                if (err) return alert(err);
+                if (err)
+                {
+                    return alert(err);
+                }
                 for (var i = 0; i < data.Participants.length; i++)
                 {
                     if (i < self.lastIndex)
                     {
                         continue;
                     }
-                    self.peopleList.push(new Person(data.Participants[i].Name));
+                    var name = data.Participants[i].Name;
+                    if (name)
+                    {
+                        var company = data.Participants[i].Company;
+                        self.peopleList.push(new Person(name, company));
+                    }
                     self.lastIndex++;
                 }
             }
@@ -66,10 +74,11 @@ function LotteryViewModel()
     	self.counter(val);
     }
 }
-function Person(name)
+function Person(name, company)
 {
 	var self = this;
 	self.name = name;
+    self.company = company;
 	self.hasWon = ko.observable(false);
 	var size = getRandomInt(25, 50);
 	self.size = ko.observable(size);
