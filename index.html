@@ -1,168 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
-<body>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js" type="text/javascript"></script>
-<img src="http://www.pernixdata.com/images/logo.png"/>
+  <head>
+    <title>The PernixData Lottery</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="vars.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script type="text/javascript" src="http://use.typekit.net/doe3egm.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="gooss.js"></script>
+    <link type="text/css" rel="stylesheet" href="draw.css" />
 
-<style>
-body {
-	color: #252525;
-	font: 400 normal 1.4em/1.286em "proxima-nova", Arial, Helvetica, sans-serif;
-}
-.winner {
-	background-color: red;
-	border: 10px solid black;
-	border-radius: 10px;
-}
-li
-{
-	display: inline;
-	list-style-type: none;
-	padding-right: 20px;
-}
-</style>
+    <h1>The <img src="http://www.pernixdata.com/images/logo.png"/> Lottery</h1>
 
-<script type="text/javascript" src="http://use.typekit.net/doe3egm.js"></script>
+    <hr />
 
-<h1>The PernixData Lottery</h1>
+    <div data-bind="visible: counter() < 16 && !winnerFound(), text: counter">
+    </div>
 
-<div data-bind="visible: counter() < 16, text: counter">
-</div>
+    <div data-bind="visible: !isRunning()">
+      A total of <span data-bind="text: peopleList().length"></span> has entered the draw...
+    </div>
 
-<button data-bind="visible: isRunning, click: addPeople">1. Add people (will be runtime added during presentation)</button>
-<br />
-<button data-bind="visible: isRunning, click: findWinner">2. Find the winner</button>
+    <div data-bind="visible: isRunning && winnerFound()">
+      The winner is <b><span data-bind="text: theWinner().name"></span></b>
+    </div>
 
-<ul data-bind="foreach: peopleList">
-	<li data-bind="css: { winner: hasWon }, style: { fontSize: size() + 'px', color: color }" ><span data-bind="text: name"/></li>
-</ul>
-<table>
-</table>
-<script>
-var countdownSeconds = 15;
-function LotteryViewModel()
-{
-	var self = this;
-	self.isRunning = ko.observable(true);
-	self.peopleList = ko.observableArray([ ]);
-    self.people = ko.computed(function() {
-		return self.peopleList;
-    })
+    <button data-bind="visible: !isRunning(), click: findWinner">Find the winner</button>
 
-    self.counter = ko.observable(countdownSeconds+1);
+    <hr />
 
-    self.shuffleTheList = function()
-    {
-    	shuffle(self.peopleList());
-    	self.peopleList.valueHasMutated();
-    }
-
-    self.addPeople = function()
-    {
-    	self.peopleList.push(new Person("Foo"));
-		self.peopleList.push(new Person("Bar"));
-		self.peopleList.push(new Person("Horse"));
-		self.peopleList.push(new Person("Test"));
-		self.peopleList.push(new Person("ASD"));
-		self.peopleList.push(new Person("Frank"));
-		self.peopleList.push(new Person("Morten"));
-		self.peopleList.push(new Person("asdad"));
-		self.peopleList.push(new Person("asd"));
-		self.peopleList.push(new Person("Hozxczxcrse"));
-		self.peopleList.push(new Person("asda"));
-		self.peopleList.push(new Person("zzz"));
-		self.peopleList.push(new Person("ewqwe"));
-		self.peopleList.push(new Person("ddd"));
-		self.peopleList.push(new Person("bsds"));
-		self.peopleList.push(new Person("vvasd"));
-		self.peopleList.push(new Person("sdsd"));
-		self.peopleList.push(new Person("qwe"));
-    }
-
-    self.findWinner = function() {
-    	setTimer(countdownSeconds, function() 
-    		{
-    			var winner = getRandomInt(0, self.peopleList().length-1)
-    			self.peopleList()[winner].hasWon(true);
-    			self.peopleList()[winner].size(150);
-    			self.peopleList()[winner].color('white');
-    			self.isRunning(false);
-    		}, self.updateCounterCallback);
-    }
-
-    self.updateCounterCallback = function(val)
-    {
-    	self.counter(val);
-    }
-}
-function Person(name)
-{
-	var self = this;
-	self.name = name;
-	self.hasWon = ko.observable(false);
-	var size = getRandomInt(25, 50);
-	self.size = ko.observable(size);
-	self.color = ko.observable(getRandomColor());
-}
-
-var lotteryViewModel = new LotteryViewModel();
-
-function setTimer(iteration, findWinnerCallback, updateCounterCallback)
-{
-	updateCounterCallback(iteration);
-	console.log(iteration);
-	if (iteration == 0)
-	{
-		findWinnerCallback();
-		return;
-	}
-	setTimeout(function() {
-		lotteryViewModel.shuffleTheList();
-		setTimer(--iteration, findWinnerCallback, updateCounterCallback);
-	}, 1000)
-
-}
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.round(Math.random() * 15)];
-    }
-    return color;
-}
-
-function getRandomInt (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-ko.applyBindings(lotteryViewModel);
-
-
-function shuffle(array) {
-  var currentIndex = array.length
-    , temporaryValue
-    , randomIndex
-    ;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-</script>
-</body>
+    <ul data-bind="foreach: peopleList">
+    	<li data-bind="css: { winner: hasWon }, style: { fontSize: size() + 'px', color: color }" ><span data-bind="text: name"/></li>
+    </ul>
+    <script type="text/javascript" src="lottery.js"></script>
+  </body>
 </html>

@@ -1,0 +1,15 @@
+body {
+	color: #252525;
+	font: 400 normal 1.4em/1.286em "proxima-nova", Arial, Helvetica, sans-serif;
+}
+.winner {
+	background-color: red;
+	border: 10px solid black;
+	border-radius: 10px;
+}
+li
+{
+	display: inline;
+	list-style-type: none;
+	padding-right: 20px;
+}
