@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Enter the draw</title>
+<script type="text/javascript">
+function checkBeforeSubmit(){
+	document.getElementById('theForm').submit();
+	document.getElementById('success').innerHTML='Submitted';
+}
+</script>
+</head>
+<body>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+<form method="post" action="https://docs.google.com/macros/exec?service=0AuyIagyFg9P9dGFjVzdMb1F5am1ZQkR2NGtDTlBxOEE" name="theForm" id="theForm" target="hidden_iframe" id="GoogleForm">
+Name:
+<input type="text" name="name" id="name"/>
+<br/>Company:
+<textarea name="company" id="company"></textarea>
+<br/>
+<input type="button" value="Submit" class="submit" onclick="checkBeforeSubmit();"/>
+<span id="success"></span>
+</div>
+</form>
+</body>
+</html>
