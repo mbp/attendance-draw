@@ -1,1 +1,12 @@
-var url = "https://docs.google.com/a/wtf.dk/spreadsheet/ccc?key=0AuyIagyFg9P9dFpzbE84ajA1YWlvRUlSWUVGWUFSb0E#gid=0";
+var url = "";
+var shortUrl = "";
+
+if (!url)
+{
+	alert("must specify url in vars.js");
+}
+
+if (!shortUrl)
+{
+	alert("must specify shortUrl in vars.js");
+}

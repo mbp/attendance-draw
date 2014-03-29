@@ -62,7 +62,6 @@ function LotteryViewModel()
     			var winner = getRandomInt(0, self.peopleList().length-1)
                 var winnerPerson = self.peopleList()[winner];
     			winnerPerson.hasWon(true);
-    			winnerPerson.size(150);
     			winnerPerson.color('white');
                 self.theWinner(winnerPerson);
                 self.winnerFound(true);
@@ -80,8 +79,6 @@ function Person(name, company)
 	self.name = name;
     self.company = company;
 	self.hasWon = ko.observable(false);
-	var size = getRandomInt(25, 50);
-	self.size = ko.observable(size);
 	self.color = ko.observable(getRandomColor());
 }
 

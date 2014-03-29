@@ -1,15 +1,37 @@
-body {
+body
+{
 	color: #252525;
 	font: 400 normal 1.4em/1.286em "proxima-nova", Arial, Helvetica, sans-serif;
 }
-.winner {
+
+.winner
+{
 	background-color: red;
 	border: 10px solid black;
-	border-radius: 10px;
+	border-radius: 5px;
+    color: white;
+    font-size: 60px;
 }
+
 li
 {
 	display: inline;
 	list-style-type: none;
 	padding-right: 20px;
+    font-size: 30px;
+}
+
+hr
+{
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    background: #999;
+}
+
+div.drawbox
+{
+    float: left;
+    background-color: lightblue;
+    padding: 10px;
+    box-shadow: 2px 2px 2px #888;
 }

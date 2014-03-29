@@ -11,6 +11,9 @@
     <script type="text/javascript" src="gooss.js"></script>
     <link type="text/css" rel="stylesheet" href="draw.css" />
 
+    <div class="drawbox">
+
+
     <h1>The <img src="http://www.pernixdata.com/images/logo.png"/> Lottery</h1>
 
     <hr />
@@ -23,17 +26,20 @@
     </div>
 
     <div data-bind="visible: isRunning && winnerFound()">
-      The winner is <b><span data-bind="text: theWinner().name"></span>(<span data-bind="text: theWinner().company"></span>)</b>
+      The winner is <b><span data-bind="text: theWinner().name"></span> (<span data-bind="text: theWinner().company"></span>)</b>
     </div>
 
-    <button data-bind="visible: !isRunning(), click: findWinner">Find the winner</button>
+    <button data-bind="visible: !isRunning() && peopleList().length > 0, click: findWinner">Find the winner</button>
 
     <hr />
-    <div style="clear: both" />
+  </div>
+  <div style="float: left">
 
     <ul data-bind="foreach: peopleList">
-    	<li data-bind="css: { winner: hasWon }, style: { fontSize: size() + 'px', color: color }" ><span data-bind="text: name"/></li>
+    	<li data-bind="css: { winner: hasWon }, style: { color: color }" ><span data-bind="text: name"/></li>
+      <li>-</li>
     </ul>
+  </div>
     <script type="text/javascript" src="lottery.js"></script>
   </body>
 </html>
