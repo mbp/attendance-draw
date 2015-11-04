@@ -1,4 +1,6 @@
+// This is lenght of the countdown in seconds
 var countdownSeconds = 15;
+
 function LotteryViewModel()
 {
 	var self = this;

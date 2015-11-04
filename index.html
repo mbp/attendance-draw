@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>The PernixData Lottery</title>
+    <title>The Attendance Draw</title>
   </head>
   <body>
     <script type="text/javascript" src="vars.js"></script>
@@ -12,18 +12,24 @@
     <link type="text/css" rel="stylesheet" href="draw.css" />
 
     <div class="drawbox">
+		
+		<div data-bind="visible: shortUrl">
+		Signup Form: <b><u><span data-bind="text: shortUrl"></span></u></b>
+		</div>
 
-     Form: <b><u><span data-bind="text: shortUrl"></span></u></b>
-
-    <h1>The <img src="http://www.pernixdata.com/images/logo.png"/> Lottery</h1>
-
+    <h1><span data-bind="text: lotteryName"></span></h1>
+    
+    <div data-bind="visible: lotteryLogo">
+    	<img data-bind="attr : {src: lotteryLogo}" />
+    </div>
+	
     <hr />
 
-    <div data-bind="visible: counter() < 16 && !winnerFound(), text: counter">
+    <div data-bind="visible: counter() < countdownSeconds+1 && !winnerFound(), text: counter">
     </div>
 
     <div data-bind="visible: !isRunning()">
-      A total of <span data-bind="text: peopleList().length"></span> has entered the draw...
+      A total of <span data-bind="text: peopleList().length"></span> has entered the draw
     </div>
 
     <div data-bind="visible: isRunning && winnerFound()">
@@ -38,7 +44,7 @@
 
     <ul data-bind="foreach: peopleList">
     	<li data-bind="css: { winner: hasWon }, style: { color: color }" ><span data-bind="text: name"/></li>
-      <li>-</li>
+		<li>-</li>
     </ul>
   </div>
     <script type="text/javascript" src="lottery.js"></script>
